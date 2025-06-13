@@ -2,46 +2,125 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Forex Simulator – AI-Driven Forex Dashboard</title>
+  <meta name="viewport"
+        content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <title>Forex Options — AI Dashboard</title>
 
   <!-- Feather icons CDN -->
   <script src="https://unpkg.com/feather-icons"></script>
 
-  <!-- Main stylesheet -->
-  <link rel="stylesheet" href="landing.css" />
+  <!-- Core styles -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="landing">
+  <div id="app" class="layout">
 
-    <!-- ── hero / copy ------------------------------------------------ -->
-    <section class="hero">
-      <div class="logo">A</div>
-      <h1 class="title">Forex<br/>Simulator</h1>
-      <p class="tagline">Trade smarter with<br/>AI-driven insights</p>
+    <!-- ───────────────── Sidebar ───────────────── -->
+    <aside id="sidebar" class="sidebar">
+      <button id="hamburger" class="hamburger" aria-label="Toggle menu">
+        <i data-feather="menu"></i>
+      </button>
 
-      <ul class="features">
-        <li><i data-feather="bar-chart-2"></i>Real-Time Forex Rates</li>
-        <li><i data-feather="cpu"></i>AI Strategy Suggestions</li>
-        <li><i data-feather="calendar"></i>Macro Event Tracking</li>
-      </ul>
+      <div class="profile-block">
+        <div class="avatar"><i data-feather="user"></i></div>
+        <p class="name">Trader Profile</p>
+        <p class="email">user@ai.forex</p>
+      </div>
 
-      <button id="launchDemoBtn" class="cta">Launch Interactive Demo</button>
-    </section>
+      <nav class="side-nav">
+        <button data-target="rates"><i data-feather="smartphone"></i><span>Forex Rates</span></button>
+        <button data-target="macro"><i data-feather="trending-up"></i><span>Macro Events</span></button>
+        <button data-target="ai"><i data-feather="cpu"></i><span>AI Assistant</span></button>
+        <button data-target="custom"><i data-feather="settings"></i><span>Custom Interface</span></button>
+      </nav>
+    </aside>
 
-    <!-- ── device mock-up -------------------------------------------- -->
-    <section class="mockup">
-      <!-- If you have an exported PNG/JPG of the laptop UI, drop it in /img/ -->
-      <img
-        src="img/laptop-forex-dashboard.png"
-        alt="Forex Options AI Dashboard running inside laptop mock-up"
-      />
-    </section>
-  </main>
+    <!-- ───────────────── Main Pane ───────────────── -->
+    <main class="main">
 
+      <header class="hero">
+        <h1>Forex Options<br class="m-break">AI Dashboard</h1>
+        <p>Track key metrics &amp; real-time AI-driven trade strategies</p>
+      </header>
+
+      <!-- Rate Cards -->
+      <section id="rates" class="rates-grid">
+        <article class="card">
+          <h3>EUR/USD</h3>
+          <p class="rate">Rate <span id="eurUsd">--</span></p>
+        </article>
+
+        <article class="card red">
+          <h3>USD/JPY</h3>
+          <p class="rate">Rate <span id="usdJpy">--</span></p>
+        </article>
+
+        <article class="card green wide">
+          <h3>GBP/USD</h3>
+          <p class="rate">Rate <span id="gbpUsd">--</span></p>
+        </article>
+      </section>
+
+      <!-- Macro Table -->
+      <section id="macro" class="macro">
+        <h2>Macro Events &amp; Metrics</h2>
+        <table>
+          <thead>
+            <tr><th>Pair</th><th>Vol.</th><th>Rate Diff</th><th>Event</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>EUR/USD</td><td>8.2 %</td><td class="down">-0.75 %</td><td>ECB Rate Decision</td></tr>
+            <tr><td>USD/JPY</td><td>7.8 %</td><td class="up">+2.1 %</td><td>BoJ Press Conf.</td></tr>
+            <tr><td>GBP/USD</td><td>5.9 %</td><td class="down">-0.25 %</td><td>UK Inflation Data</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Placeholder Panels -->
+      <section id="ai"     class="placeholder"><h2>AI Strategy Assistant</h2></section>
+      <section id="custom" class="placeholder"><h2>Custom Interface</h2></section>
+
+    </main>
+
+    <!-- Mobile Bottom Bar -->
+    <nav class="bottom-bar">
+      <button data-target="rates"><i data-feather="smartphone"></i></button>
+      <button data-target="macro"><i data-feather="trending-up"></i></button>
+      <button data-target="ai"><i data-feather="cpu"></i></button>
+    </nav>
+  </div>
+
+  <!-- ───────────────── Scripts ───────────────── -->
   <script>
-    // replace all <i data-feather="...">
-    feather.replace();
+    feather.replace();                                          // load all icons
+
+    /* ─ Toggle side-menu on ≤767 px ─ */
+    const sidebar   = document.getElementById('sidebar');
+    document.getElementById('hamburger').onclick = () =>
+      sidebar.classList.toggle('open');
+
+    /* ─ Smooth scroll + active icon ─ */
+    document.querySelectorAll('[data-target]').forEach(btn=>{
+      btn.onclick = () =>{
+        document.getElementById(btn.dataset.target)
+                ?.scrollIntoView({behavior:'smooth'});
+        document.querySelectorAll('.bottom-bar button')
+          .forEach(b=>b.classList.toggle('active',b===btn));
+        if (innerWidth < 768) sidebar.classList.remove('open');
+      };
+    });
+
+    /* ─ Fetch live FX rates once on load ─ */
+    fetch('https://api.exchangerate.host/latest?base=USD')
+      .then(r=>r.json()).then(d=>{
+        eurUsd.textContent = (1/d.rates.EUR).toFixed(4);
+        usdJpy.textContent =  d.rates.JPY.toFixed(2);
+        gbpUsd.textContent = (1/d.rates.GBP).toFixed(4);
+      }).catch(()=>{                       // fallback
+        eurUsd.textContent='1.0843';
+        usdJpy.textContent='142.89';
+        gbpUsd.textContent='1.2711';
+      });
   </script>
 </body>
 </html>
