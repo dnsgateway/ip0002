@@ -77,7 +77,23 @@
       </section>
 
       <!-- Placeholder Panels -->
-      <section id="ai"     class="placeholder"><h2>Trade Simulator</h2></section>
+      <section id="ai"     class="placeholder"><h2>Trade Simulator</h2>
+        <form id="simForm">
+          <label for="pair">Select Pair</label>
+          <select id="pair" name="pair">
+            <option>EUR/USD</option>
+            <option>USD/JPY</option>
+            <option>GBP/USD</option>
+          </select>
+          <label for="amount">Amount</label>
+          <input type="number" id="amount" name="amount" value="10000" />
+          <label for="leverage">Leverage</label>
+          <input type="number" id="leverage" name="leverage" value="10" />
+          <label><input type="checkbox" id="aiAssist" checked /> Enable AI Assist</label>
+          <button type="submit">Simulate Trade</button>
+        </form>
+        <div id="simResult"></div>
+      </section>
       <section id="custom" class="placeholder"><h2>Custom Interface</h2></section>
 
     </main>
