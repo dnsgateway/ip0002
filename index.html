@@ -77,7 +77,38 @@
       </section>
 
       <!-- Placeholder Panels -->
-      <section id="ai"     class="placeholder"><h2>AI Strategy Assistant</h2></section>
+      <section id="ai" class="trade-sim">
+  <div class="trade-sim-header">
+    <h2>Trade Simulator</h2>
+    <label class="toggle">
+      <input type="checkbox" id="aiToggle" />
+      <span class="slider"></span>
+      <span class="label-text">AI Assist</span>
+    </label>
+  </div>
+
+  <form id="simForm" class="sim-form">
+    <label>Currency Pair:
+      <select id="pair">
+        <option>EUR/USD</option>
+        <option>USD/JPY</option>
+        <option>GBP/USD</option>
+      </select>
+    </label>
+    <label>Trade Size (Units):
+      <input type="number" id="size" placeholder="e.g. 10,000" required />
+    </label>
+    <label>Entry Price:
+      <input type="number" id="entry" step="0.0001" required />
+    </label>
+    <label>Exit Price:
+      <input type="number" id="exit" step="0.0001" required />
+    </label>
+    <button type="submit">Simulate Trade</button>
+  </form>
+
+  <div id="simResult" class="sim-result">Results will appear here.</div>
+</section>
       <section id="custom" class="placeholder"><h2>Custom Interface</h2></section>
 
     </main>
