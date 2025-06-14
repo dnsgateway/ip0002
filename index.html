@@ -193,6 +193,12 @@ const pairEl = document.getElementById('pair');
 const sizeEl = document.getElementById('size');
 const entryEl = document.getElementById('entry');
 const exitEl = document.getElementById('exit');
+    /* ───────────────── Matrix + Blur toggles ───────────────── */
+document.getElementById('matrixToggle').onchange = e =>
+  document.body.classList.toggle('matrix', e.target.checked);
+
+document.getElementById('blurToggle').onchange = e =>
+  document.body.classList.toggle('blurred', e.target.checked);
   </script>
 </body>
 </html>
