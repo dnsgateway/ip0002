@@ -148,3 +148,42 @@ body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
   .sim-form{grid-template-columns:1fr;}
   .sim-form button{grid-column:span 1;}
 }
+/* ——  MATRIX theme (green “code rain” palette) ————— */
+body.matrix{
+  --bg:#000;               /* almost-black */
+  --panel:#010a02;         /* deep green-black */
+  --border:#103b13;
+  --accent:#23ff23;        /* neon green */
+  --txt:#23ff23;
+  --sub:#46c146;
+  --up:#7dff7d;
+  --down:#ff4f7e;          /* leave red for losses */
+}
+
+/* give panel a subtle matrix-style gradient */
+body.matrix .card,
+body.matrix .sidebar,
+body.matrix .bottom-bar,
+body.matrix .macro table,
+body.matrix .trade-sim,
+body.matrix .profile-block{
+  background:linear-gradient(145deg,#010a02 0%,#001503 100%);
+}
+
+/* ——  Blur toggle ——————————— */
+body.blurred .sidebar,
+body.blurred .main,
+body.blurred .bottom-bar{
+  filter:blur(6px);
+  pointer-events:none;                /* prevent clicks while blurred */
+  user-select:none;
+}
+
+/* optional darker backdrop while blurred */
+body.blurred::after{
+  content:'';
+  position:fixed;inset:0;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(2px);
+  z-index:3000;                       /* above everything */
+}
