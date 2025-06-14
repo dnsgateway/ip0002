@@ -121,6 +121,30 @@
         usdJpy.textContent='142.89';
         gbpUsd.textContent='1.2711';
       });
+    // Simulate trade logic
+document.getElementById('simForm').onsubmit = e => {
+  e.preventDefault();
+  const pair = pairEl.value;
+  const size = +sizeEl.value;
+  const entry = +entryEl.value;
+  const exit = +exitEl.value;
+  const aiOn = document.getElementById('aiToggle').checked;
+
+  const pipDiff = (exit - entry) * 10000;
+  const pl = (pipDiff * size / 10000).toFixed(2);
+  const advice = aiOn ? `🤖 AI suggests trailing stop after +20 pips.` : '';
+
+  simResult.innerHTML = `
+    <strong>${pair}</strong><br/>
+    P/L: <span style="color:${pl >= 0 ? 'lime' : 'salmon'}">${pl} USD</span><br/>
+    ${advice}
+  `;
+};
+
+const pairEl = document.getElementById('pair');
+const sizeEl = document.getElementById('size');
+const entryEl = document.getElementById('entry');
+const exitEl = document.getElementById('exit');
   </script>
 </body>
 </html>
