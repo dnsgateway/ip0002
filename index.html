@@ -155,17 +155,19 @@
       };
     });
 
-    /* ─ Fetch live FX rates once on load ─ */
-    fetch('https://api.exchangerate.host/latest?base=USD')
-      .then(r=>r.json()).then(d=>{
-        eurUsd.textContent = (1/d.rates.EUR).toFixed(4);
-        usdJpy.textContent =  d.rates.JPY.toFixed(2);
-        gbpUsd.textContent = (1/d.rates.GBP).toFixed(4);
-      }).catch(()=>{                       // fallback
-        eurUsd.textContent='1.0843';
-        usdJpy.textContent='142.89';
-        gbpUsd.textContent='1.2711';
-      });
+  // FX Rate Fetch
+    function fetchRates() {
+      fetch('https://api.exchangerate.host/latest?base=USD')
+        .then(r => r.json()).then(d => {
+          qs('#eurusdVal').textContent = (1 / d.rates.EUR).toFixed(4);
+          qs('#usdjpyVal').textContent = d.rates.JPY.toFixed(2);
+          qs('#gbpusdVal').textContent = (1 / d.rates.GBP).toFixed(4);
+        }).catch(() => {
+          qs('#eurusdVal').textContent = '1.0843';
+          qs('#usdjpyVal').textContent = '142.89';
+          qs('#gbpusdVal').textContent = '1.2711';
+        });
+    
 
 /* --- helper: fetch timeseries & calc indicators --- */
 const pairs = [
