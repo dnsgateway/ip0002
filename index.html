@@ -43,30 +43,21 @@
         <p>Track key metrics &amp; real-time AI-driven trade strategies</p>
       </header>
 
-      <!-- Rate Cards -->
-      <section id="rates" class="rates-grid">
-        <article class="card">
-          <h3>EUR/USD</h3>
-          <p class="rate">Rate <span id="eurUsd">--</span></p>
-          <p class="sma">SMA-20: <span>--</span></p>
-          <p class="rsi">RSI-14: <span>--</span></p>
-        </article>
-
-        <article class="card red">
-          <h3>USD/JPY</h3>
-          <p class="rate">Rate <span id="usdJpy">--</span></p>
-          <p class="sma">SMA-20: <span>--</span></p>
-          <p class="rsi">RSI-14: <span>--</span></p>
-        </article>
-
-        <article class="card green wide">
-          <h3>GBP/USD</h3>
-          <p class="rate">Rate <span id="gbpUsd">--</span></p>
-          <p class="sma">SMA-20: <span>--</span></p>
-          <p class="rsi">RSI-14: <span>--</span></p>
-        </article>
-      </section>
-
+      <!-- FX Rates -->
+            <section id="rates" class="rates-grid">
+              <div class="rate-card">
+                <h3>EUR/USD</h3>
+                <p class="rate-line">Rate: <span id="eurusdVal">--</span></p>
+              </div>
+              <div class="rate-card">
+                <h3>USD/JPY</h3>
+                <p class="rate-line red">Rate: <span id="usdjpyVal">--</span></p>
+              </div>
+              <div class="rate-card wide">
+                <h3>GBP/USD</h3>
+                <p class="rate-line green">Rate: <span id="gbpusdVal">--</span></p>
+              </div>
+            </section>
       <!-- Macro Table -->
       <section id="macro" class="macro">
         <h2>Macro Events &amp; Metrics</h2>
