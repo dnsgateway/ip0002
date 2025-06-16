@@ -175,6 +175,59 @@
         usdJpy.textContent='142.89';
         gbpUsd.textContent='1.2711';
       });
+
+/* --- helper: fetch timeseries & calc indicators --- */
+const pairs = [
+  { code:'EURUSD', base:'USD', quote:'EUR', invert:true },
+  { code:'USDJPY', base:'USD', quote:'JPY', invert:false },
+  { code:'GBPUSD', base:'USD', quote:'GBP', invert:true }
+];
+
+(async function loadIndicators(){
+  const end   = new Date().toISOString().slice(0,10);
+  const start = new Date(Date.now()-32*24*3600*1000).toISOString().slice(0,10);
+
+  for(const p of pairs){
+    const url = `https://api.exchangerate.host/timeseries?start_date=${start}&end_date=${end}&base=${p.base}&symbols=${p.quote}`;
+    const data = await fetch(url).then(r=>r.json()).catch(()=>null);
+    if(!data || !data.rates) continue;
+
+    /* build closing-price array (chronological) */
+    const closes = Object.entries(data.rates)
+      .sort((a,b)=>new Date(a[0])-new Date(b[0]))
+      .map(e=>p.invert?1/e[1][p.quote]:e[1][p.quote]);
+
+    const {sma,rsi} = calcIndicators(closes);
+
+    const card = document.querySelector(`[data-pair="${p.code}"]`);
+    if(card){
+      card.querySelector('.sma span').textContent = sma.toFixed(4);
+      card.querySelector('.rsi span').textContent = rsi.toFixed(1);
+    }
+  }
+})();
+
+/* --- simple SMA-20 & RSI-14 calculator --- */
+function calcIndicators(arr){
+  const len = arr.length;
+  const last20 = arr.slice(-20);
+  const sma = last20.reduce((a,b)=>a+b,0)/20;
+
+  /* RSI-14 */
+  const gains=[], losses=[];
+  for(let i=len-15;i<len-1;i++){
+    const diff = arr[i+1]-arr[i];
+    if(diff>0) gains.push(diff); else losses.push(Math.abs(diff));
+  }
+  const avgGain = gains.reduce((a,b)=>a+b,0)/14||0.0001;
+  const avgLoss = losses.reduce((a,b)=>a+b,0)/14||0.0001;
+  const rs  = avgGain/avgLoss;
+  const rsi = 100-(100/(1+rs));
+
+  return {sma,rsi};
+}
+
+    
     // Simulate trade logic
 document.getElementById('simForm').onsubmit = e => {
   e.preventDefault();
