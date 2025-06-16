@@ -125,6 +125,12 @@ body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 .macro tr:last-child td{border-bottom:none;}
 
 .placeholder{margin:3rem 0 1rem;color:var(--sub);}
+.card .sma,
+.card .rsi{
+  font-size:.74rem;
+  color:var(--sub);
+  margin-top:.15rem;
+}
 
 /* ─ bottom bar (mobile) ─ */
 .bottom-bar{
