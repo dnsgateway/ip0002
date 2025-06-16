@@ -106,15 +106,16 @@ body{font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 
 /* ─ rate cards ─ */
 .rates-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-  gap:1.2rem;margin-bottom:2.4rem;}
-.card{
-  background:var(--panel);border:1px solid var(--border);
-  padding:1rem 1.2rem;border-radius:12px;}
-.card.wide{grid-column:span 2;}
-.card h3{margin-bottom:.3rem;font-size:1rem;font-weight:600;}
-.rate{font-size:.9rem;}
-.red .rate{color:var(--down);}   .green .rate{color:var(--up);}
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:30px;
+}
+.rate-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;
+  padding:16px 18px;
+}
+.rate-card.wide{grid-column:1/3;}
+.rate-card h3{font-size:.95rem;margin-bottom:4px;font-weight:600;}
+.rate-line{font-size:.9rem;}
+.red{color:#ff4778;} .green{color:var(--green);}
 
 /* ─ macro table ─ */
 .macro h2{font-size:1.3rem;margin-bottom:.8rem;}
